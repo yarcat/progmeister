@@ -1,4 +1,3 @@
-// Package arrays contains tests for https://progmeister.ch/blog/problems/arrays/.
 package arrays
 
 import (
@@ -9,6 +8,7 @@ import (
 	pr "github.com/yarcat/progmeister/reflect"
 )
 
+// f should be func(arra [N]int)uint
 func testIsPermutation(f interface{}) (passed, failed int, err error) {
 	intArr := &pr.ArrayMatcher{M: &pr.KindMatcher{Kind: reflect.Int}}
 	wantFn := &pr.FuncMatcher{
@@ -16,7 +16,7 @@ func testIsPermutation(f interface{}) (passed, failed int, err error) {
 		Out: []pr.TypeMatcher{&pr.KindMatcher{Kind: reflect.Uint}},
 	}
 	if !wantFn.MatchType(reflect.TypeOf(f)) {
-		return 0, 0, errors.New("want func([...]int)uint")
+		return 0, 0, errors.New("want func([N]int)uint")
 	}
 
 	arrLen := intArr.Len
@@ -34,7 +34,7 @@ func testIsPermutation(f interface{}) (passed, failed int, err error) {
 		// Usefull tests that should be executed dynamically:
 		{name: "straight up", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(1, 1)},
 		{name: "straight down", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(arrLen, -1)},
-		{name: "random permutation", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(1, 1).Shuffle()},
+		{name: "shuffle", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(1, 1).Shuffle()},
 		{name: "zero value", want: 0, in: &pr.IntArrayBuilder{Count: arrLen}},
 		{name: "same value", want: 0, in: (&pr.IntArrayBuilder{Count: arrLen}).Fill(1)},
 		{name: "contains 0", want: 0, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(0, 1)},

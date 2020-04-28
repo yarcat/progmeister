@@ -12,10 +12,29 @@ func isPermutation(arr [4]int) uint {
 	return 0
 }
 
-func main() {
-	passed, failed, err := arrays.RunTests(arrays.IsPermutation, isPermutation)
-	if err != nil {
-		log.Fatalf("RunTests failed: %v", err)
+func maxMin(arr [4]int) (max, min int) {
+	min, max = arr[0], arr[0]
+	for i := 1; i < len(arr); i++ {
+		if arr[i] < min {
+			min = arr[i]
+		}
+		if arr[i] > max {
+			max = arr[i]
+		}
 	}
-	fmt.Printf("Passed=%v, failed=%v\n", passed, failed)
+	return
+}
+
+func main() {
+	passed, failed, err := arrays.RunTests(arrays.MaxMin, maxMin)
+	if err != nil {
+		log.Fatalf("RunTests(MaxMin) failed: %v", err)
+	}
+	fmt.Printf("minMax: passed=%v, failed=%v\n", passed, failed)
+
+	passed, failed, err = arrays.RunTests(arrays.IsPermutation, isPermutation)
+	if err != nil {
+		log.Fatalf("RunTests(IsPermutation) failed: %v", err)
+	}
+	fmt.Printf("isPermutation: passed=%v, failed=%v\n", passed, failed)
 }
