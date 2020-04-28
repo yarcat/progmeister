@@ -1,6 +1,15 @@
+## Supported Test Runners
+
+All test runners correspond to the function names proposed on the [arrays excercises page](https://progmeister.ch/blog/problems/arrays/), however to make they public we have to name them using [CamelCase] (aka CapWords) notation.
+
+* `arrays.MaxMin`
+* `arrays.IsPermutation`
+
+[CamelCase]: https://simple.wikipedia.org/wiki/CamelCase
+
 ## Idea & Example
 
-The framework should help executing tests created by our students. Ideal invocation example:
+The framework should help executing tests created by our students. They should work with arrays of any length. Ideal invocation example:
 
 ```golang
 package main
@@ -13,7 +22,7 @@ import (
 )
 
 func isPermutation(arr [10]int) uint {
-  // Custom implementation goes here.
+	// Custom implementation goes here.
 	return 0
 }
 
