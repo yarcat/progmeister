@@ -1,25 +1,55 @@
 // Package arrays contains tests for https://progmeister.ch/blog/problems/arrays/.
 package arrays
 
-import "reflect"
+import (
+	"errors"
+	"reflect"
+)
 
-// https://play.golang.org/p/E_fLHCJYiKM
-func isPermutation(arr interface{}) uint {
-	t := reflect.TypeOf(arr)
-	if t.Kind() != reflect.Array || t.Elem().Kind() != reflect.Int {
-		panic("arr must be an array of integers")
-	}
-	v := reflect.ValueOf(arr)
-	m := make([]int, v.Len())
-	for i := 0; i < len(m); i++ {
-		n := int(v.Index(i).Int())
-		if n <= 0 || n > len(m) {
-			return 0
+func testIsPermutation(f interface{}) (passed, failed int, err error) {
+	arrLen := 0
+	t := reflect.TypeOf(f)
+	bad := true
+	for {
+		if t.Kind != reflect.Func || t.NumIn() != 0 t.NumOut != 0 {
+			break
 		}
-		if m[n-1] > 0 {
-			return 0
+		argT := t.In(0)
+		if argT.Kind() != reflect.Array || argT.Elem().Kind() != reflect.Int {
+			break
 		}
-		m[n-1]++
+		retT := t.Out(0)
+		if argT.Kind() != reflect.Uint {
+			break
+		}
+		// All checks passed.
+		bad = false
+		arrLen := argT.Len()
+		break
 	}
-	return 1
+	if bad {
+		// TODO(yarcat): Print what we've got here.
+		return 0, 0, error.New("want func([...]int)uint")
+	}
+	valF := reflect.ValueOf(f)
+	callF := func(in reflect.Value) uint {
+		args := []reflect.Value{in}
+		ret := reflect.Call(args)
+		return uint(ret[0].Uint())
+	}
+	arrT := reflect.ArrayOf(arrLen, reflect.TypeOf(0)) 
+	for _, test := range []struct{
+		in reflect.Value
+		want uint
+	} {
+		{},
+	} {
+		actual := callF(test.in)
+		if actual == test.want {
+			passed++
+		} else {
+			failed++
+		}
+	}
+	return
 }
