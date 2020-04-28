@@ -7,12 +7,12 @@ import (
 	"github.com/yarcat/progmeister/s01/arrays"
 )
 
-func isPermutation(arr [4]int) uint {
+func isPermutation(arr [13]int) uint {
 	// Custom implementation goes here.
 	return 0
 }
 
-func maxMin(arr [4]int) (max, min int) {
+func maxMin(arr [111]int) (max, min int) {
 	min, max = arr[0], arr[0]
 	for i := 1; i < len(arr); i++ {
 		if arr[i] < min {
