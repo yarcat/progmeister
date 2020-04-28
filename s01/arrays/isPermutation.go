@@ -10,29 +10,16 @@ import (
 )
 
 func testIsPermutation(f interface{}) (passed, failed int, err error) {
-	arrLen := 0
-	t := reflect.TypeOf(f)
-	bad := true
-	for {
-		if t.Kind() != reflect.Func || t.NumIn() != 1 || t.NumOut() != 1 {
-			break
-		}
-		argT := t.In(0)
-		if argT.Kind() != reflect.Array || argT.Elem().Kind() != reflect.Int {
-			break
-		}
-		if t.Out(0).Kind() != reflect.Uint {
-			break
-		}
-		// All checks passed.
-		bad = false
-		arrLen = argT.Len()
-		break
+	intArr := &pr.ArrayMatcher{M: &pr.KindMatcher{Kind: reflect.Int}}
+	wantFn := &pr.FuncMatcher{
+		In:  []pr.TypeMatcher{intArr},
+		Out: []pr.TypeMatcher{&pr.KindMatcher{Kind: reflect.Uint}},
 	}
-	if bad {
-		// TODO(yarcat): Print what we've got here.
+	if !wantFn.MatchType(reflect.TypeOf(f)) {
 		return 0, 0, errors.New("want func([...]int)uint")
 	}
+
+	arrLen := intArr.Len
 	valF := reflect.ValueOf(f)
 	callF := func(in reflect.Value) uint {
 		args := []reflect.Value{in.Elem()}
