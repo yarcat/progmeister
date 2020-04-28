@@ -42,7 +42,9 @@ func testIsPermutation(f interface{}) (passed, failed int, err error) {
 		in reflect.Value
 		want uint
 	} {
-		{},
+		// Usefull tests that should be executed dynamically:
+		// Positive: {1}, {1, 2}, {2, 1}
+		// Negative: {}, {1, 1}, {0}, {N+1}
 	} {
 		actual := callF(test.in)
 		if actual == test.want {
