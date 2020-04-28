@@ -4,8 +4,9 @@ package arrays
 import (
 	"errors"
 	"log"
-	"math/rand"
 	"reflect"
+
+	pr "github.com/yarcat/progmeister/reflect"
 )
 
 func testIsPermutation(f interface{}) (passed, failed int, err error) {
@@ -40,19 +41,19 @@ func testIsPermutation(f interface{}) (passed, failed int, err error) {
 	}
 	for _, test := range []struct {
 		name string
-		in   reflect.Value
+		in   *pr.IntArrayBuilder
 		want uint
 	}{
 		// Usefull tests that should be executed dynamically:
-		{name: "straight up", want: 1, in: makeIntArray(arrLen, fillRange(1, 1))},
-		{name: "straight down", want: 1, in: makeIntArray(arrLen, fillRange(arrLen, -1))},
-		{name: "random permutation", want: 1, in: makeIntArray(arrLen, fillRange(1, 1), randomize())},
-		{name: "zero value", want: 0, in: makeIntArray(arrLen)},
-		{name: "same value", want: 0, in: makeIntArray(arrLen, fillWith(1))},
-		{name: "contains 0", want: 0, in: makeIntArray(arrLen, fillRange(0, 1))},
-		{name: "contains N+1", want: 0, in: makeIntArray(arrLen, fillRange(2, 1))},
+		{name: "straight up", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(1, 1)},
+		{name: "straight down", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(arrLen, -1)},
+		{name: "random permutation", want: 1, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(1, 1).Shuffle()},
+		{name: "zero value", want: 0, in: &pr.IntArrayBuilder{Count: arrLen}},
+		{name: "same value", want: 0, in: (&pr.IntArrayBuilder{Count: arrLen}).Fill(1)},
+		{name: "contains 0", want: 0, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(0, 1)},
+		{name: "contains N+1", want: 0, in: (&pr.IntArrayBuilder{Count: arrLen}).FillRange(arrLen+1, -1)},
 	} {
-		actual := callF(test.in)
+		actual := callF(test.in.Build())
 		if actual == test.want {
 			log.Println("PASS:", test.name)
 			passed++
@@ -62,47 +63,4 @@ func testIsPermutation(f interface{}) (passed, failed int, err error) {
 		}
 	}
 	return
-}
-
-type makeIntArrayOption func(v reflect.Value)
-
-func fillWith(n int) func(reflect.Value) {
-	return func(v reflect.Value) {
-		for i := 0; i < v.Elem().Len(); i++ {
-			v.Elem().Index(i).SetInt(int64(n))
-		}
-	}
-}
-
-func fillRange(start, step int) func(reflect.Value) {
-	return func(v reflect.Value) {
-		for i, x := 0, int64(start); i < v.Elem().Len(); i++ {
-			v.Elem().Index(i).SetInt(x)
-			x += int64(step)
-		}
-	}
-}
-
-func randomize() func(reflect.Value) {
-	return func(v reflect.Value) {
-		for i := 0; i < v.Elem().Len()-1; i++ {
-			j := rand.Int()%(v.Elem().Len()-i) + i
-			if j == i {
-				continue
-			}
-			// Swap i-th and j-th.
-			ival := v.Elem().Index(i).Int()
-			jval := v.Elem().Index(j).Int()
-			v.Elem().Index(i).SetInt(jval)
-			v.Elem().Index(j).SetInt(ival)
-		}
-	}
-}
-
-func makeIntArray(count int, opts ...makeIntArrayOption) reflect.Value {
-	arr := reflect.New(reflect.ArrayOf(count, reflect.TypeOf(int(0))))
-	for _, f := range opts {
-		f(arr)
-	}
-	return arr
 }
