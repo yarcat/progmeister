@@ -4,14 +4,14 @@ package arrays
 type Test int
 
 const (
-  // IsPermutation is a test for an excercise #7 from https://progmeister.ch/blog/problems/arrays/.
-  IsPermutation Test = iota
+	// IsPermutation is a test for an excercise #7 from https://progmeister.ch/blog/problems/arrays/.
+	IsPermutation Test = iota
 )
 
-var tests = map[Test]func(f interface)(passed, failed int, err error) {
-  IsPermutation: testIsPermutation,
+var tests = map[Test]func(f interface{}) (passed, failed int, err error){
+	IsPermutation: testIsPermutation,
 }
 
-func (t Test) run(f interface) (passed, failed int, err error) {
-  return tests[t](f)
+func (t Test) run(f interface{}) (passed, failed int, err error) {
+	return tests[t](f)
 }

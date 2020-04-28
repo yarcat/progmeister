@@ -27,6 +27,5 @@ package arrays
 //  }
 //
 func RunTests(test Test, f interface{}) (passed, failed int, err error) {
-  return test.run(f)
+	return test.run(f)
 }
-
