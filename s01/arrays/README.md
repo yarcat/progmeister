@@ -1,6 +1,6 @@
 ## Supported Test Runners
 
-All test runners correspond to the function names proposed on the [arrays excercises page](https://progmeister.ch/blog/problems/arrays/), however to make they public we have to name them using [CamelCase] (aka CapWords) notation.
+All test runners correspond to the function names proposed on the [arrays excercises page](https://progmeister.ch/blog/problems/arrays/), however to make them public we have to name them using [CamelCase] (aka CapWords) notation.
 
 * `arrays.MaxMin`
 * `arrays.IsPermutation`
