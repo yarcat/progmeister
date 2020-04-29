@@ -39,7 +39,7 @@ func testMaxMin(f interface{}) (passed, failed int, err error) {
 		in               *pr.IntArrayBuilder
 		wantMin, wantMax int
 	}{
-		{name: "default", wantMin: 0, wantMax: 0, in: builder()},
+		{name: "zero value", wantMin: 0, wantMax: 0, in: builder()},
 		{name: "straight up", wantMin: 1, wantMax: al, in: builder().FillRange(1, 1)},
 		{name: "straight down", wantMin: -al, wantMax: -1, in: builder().FillRange(-1, -1)},
 		{name: "shuffle", wantMin: -al / 2, wantMax: -al/2 + al - 1, in: builder().FillRange(-al/2, 1).Shuffle()},
