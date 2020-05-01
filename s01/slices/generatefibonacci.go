@@ -44,15 +44,22 @@ func TestGenerateFibonacci(fn func(int) []int) {
 		{in: 12, want: []int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}},
 		{in: 13, want: []int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144}},
 	} {
-		actual := fn(test.in)
-		if equal(actual, test.want) {
-			log.Printf("PASS: generateFibonacci(%v)", test.in)
-			pass++
-		} else {
-			log.Printf("FAIL: generateFibonacci(%v) = %v, want %v",
-				test.in, actual, test.want)
-			fail++
-		}
+		func() {
+			defer func() {
+				if err := recover(); err != nil {
+					log.Printf("PANIC: generateFibonacci(%v) want %v\n%v", test.in, test.want, err)
+				}
+			}()
+			actual := fn(test.in)
+			if equal(actual, test.want) {
+				log.Printf("PASS: generateFibonacci(%v)", test.in)
+				pass++
+			} else {
+				log.Printf("FAIL: generateFibonacci(%v) = %v, want %v",
+					test.in, actual, test.want)
+				fail++
+			}
+		}()
 	}
 	fmt.Printf("generateFibonacci() test results: pass=%d, fail=%d.\n", pass, fail)
 }

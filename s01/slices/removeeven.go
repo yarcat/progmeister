@@ -29,15 +29,23 @@ func TestRemoveEven(fn func([]int) []int) {
 		{name: "same odd", in: slice(10, fixed(123)), want: slice(10, fixed(123))},
 		{name: "mix", in: insert(evenInts, oddInts), want: oddInts},
 	} {
-		actual := fn(test.in)
-		if equal(actual, test.want) {
-			log.Printf("PASS: %s", test.name)
-			pass++
-		} else {
-			log.Printf("FAIL: %s: removeEven(%v) = %v, want %v",
-				test.name, test.in, actual, test.want)
-			fail++
-		}
+		func() {
+			defer func() {
+				if err := recover(); err != nil {
+					log.Printf("PANIC: %s: removeEven(%v) want %v\n%v",
+						test.name, test.in, test.want, err)
+				}
+			}()
+			actual := fn(test.in)
+			if equal(actual, test.want) {
+				log.Printf("PASS: %s", test.name)
+				pass++
+			} else {
+				log.Printf("FAIL: %s: removeEven(%v) = %v, want %v",
+					test.name, test.in, actual, test.want)
+				fail++
+			}
+		}()
 	}
 	fmt.Printf("removeEven() test results: pass=%d, fail=%d.\n", pass, fail)
 }

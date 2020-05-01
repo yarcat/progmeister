@@ -28,15 +28,23 @@ func TestMergeIncreasingSlices(fn func(a, b []int) []int) {
 		{in1: slice(4, dup(2, count())), in2: slice(2, count()), want: slice(6, dup(3, count()))},
 		{in2: slice(4, dup(2, count())), in1: slice(2, count()), want: slice(6, dup(3, count()))},
 	} {
-		actual := fn(test.in1, test.in2)
-		if equal(test.want, actual) {
-			log.Printf("PASS: mergeIncreasingSlices(%v, %v)", test.in1, test.in2)
-			pass++
-		} else {
-			log.Printf("FAIL: mergeIncreasingSlices(%v, %v) = %v, want %v",
-				test.in1, test.in2, actual, test.want)
-			fail++
-		}
+		func() {
+			defer func() {
+				if err := recover(); err != nil {
+					log.Printf("PANIC: mergeIncreasingSlices(%v, %v) want %v\n%v",
+						test.in1, test.in2, test.want, err)
+				}
+			}()
+			actual := fn(test.in1, test.in2)
+			if equal(test.want, actual) {
+				log.Printf("PASS: mergeIncreasingSlices(%v, %v)", test.in1, test.in2)
+				pass++
+			} else {
+				log.Printf("FAIL: mergeIncreasingSlices(%v, %v) = %v, want %v",
+					test.in1, test.in2, actual, test.want)
+				fail++
+			}
+		}()
 	}
 	fmt.Printf("mergeIncreasingSlices() test results: pass=%d, fail=%d.\n", pass, fail)
 }
