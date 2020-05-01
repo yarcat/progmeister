@@ -5,7 +5,31 @@ import (
 	"log"
 )
 
-// TestJosephus contains tests for josephus function.
+// TestJosephus implements tests for `josephus` function.
+//
+//	Problem statement:
+//
+//		Implement a function `func josephus(soldiers, skip int) int` that solves the
+//		Josephus problem. Given the number of soldiers and number to be skipped, the
+//		functions returns the position counted from the selected first soldier in the
+//		initial circle to avoid execution. Positions start from 1.
+//
+//	Josephus Problem:
+//
+//		https://en.wikipedia.org/wiki/Josephus_problem
+//
+// 		Soldiers are standing in a circle waiting to be executed. Counting begins from
+//		the first soldier in the circle and proceeds around the circle in a specified
+//		direction. After a specified number of soldiers are skipped, the next soldier
+//		is executed. The procedure is repeated with the remaining soldiers, starting
+//		with the next soldier, going in the same direction and skipping the same number
+//		of soldiers, until only one soldier remains, and is freed.
+//
+//	Examples:
+//
+//		1) josephus(13, 0) -> 11
+//		2) josephus(41, 1) -> 30
+//		3) josephus(5, 1) -> 13
 func TestJosephus(fn func(soliders, skip int) int) {
 	var pass, fail int
 	for _, test := range []struct {

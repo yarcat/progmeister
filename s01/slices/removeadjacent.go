@@ -5,7 +5,16 @@ import (
 	"log"
 )
 
-// TestRemoveAdjacent contains tests for removeAdjacent function.
+// TestRemoveAdjacent implements tests for `removeAdjacent` function.
+//
+//	Problem statement:
+//
+//		Implement a function `func removeAdjacent(s []int) []int` that removes
+//		adjacent duplicate elements from the input slice.
+//
+//	Example:
+//
+//		removeAdjacent([]int{1, 3, 3, 2, 1, 3, 5, 3, 4, 4, 2}) -> []int{1, 3, 2, 1, 3, 5, 3, 4, 2}
 func TestRemoveAdjacent(fn func([]int) []int) {
 	var pass, fail int
 	for _, test := range []struct {

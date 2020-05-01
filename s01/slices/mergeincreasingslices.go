@@ -5,7 +5,18 @@ import (
 	"log"
 )
 
-// TestMergeIncreasingSlices contains tests for mergeIncreasingSlices function.
+// TestMergeIncreasingSlices implements tests for `mergeIncreasingSlices` function.
+//
+//	Problem statement:
+//
+//		Implement a function func `mergeIncreasingSlices(a, b []int) []int`, which is
+//		given two slices containing integers in an increasing order as the input. The
+//		function must return a slices that contains integers from the input array in
+//		the increasing order.
+//
+//	Example:
+//
+//		mergeIncreasingSlices([]int{1, 5, 5, 7}, []int{1, 2, 4, 6, 9}) -> []int{1, 1, 2, 4, 5, 5, 6, 7, 9}
 func TestMergeIncreasingSlices(fn func(a, b []int) []int) {
 	var pass, fail int
 	for _, test := range []struct {

@@ -5,7 +5,15 @@ import (
 	"log"
 )
 
-// TestRemoveEven contains tests for removeEven function.
+// TestRemoveEven implements tests for removeEven function.
+//
+//	Problem statement:
+//		Implement a function `func removeEven(s []int) []int` that removes even numbers
+//		from the input slice, and returns a new slice with the remaining numbers in the
+//		same order.
+//
+//	Example:
+//		removeEven([]int{5, 2, 3, 6, 2, 3}) -> []int{5, 3, 3}
 func TestRemoveEven(fn func([]int) []int) {
 	evenInts, oddInts := slice(10, even), slice(10, odd)
 	var pass, fail int
