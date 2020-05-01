@@ -2,6 +2,10 @@
 
 This package contains test functions for slices at https://progmeister.ch/blog/problems/slices/
 
+# installation
+
+`go get github.com/yarcat/progmeister/s01/slices`
+
 # example
 
 ```golang
