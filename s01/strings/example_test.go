@@ -33,7 +33,7 @@ func ExampleTestTrimSpace() {
 }
 
 func insertAt(s, subs string, i int) string {
-	return "implementation goes here"
+	return "your implementation goes here"
 }
 
 func ExampleTestInsertAt() {

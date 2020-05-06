@@ -93,6 +93,7 @@ func testTrimFunction(name string, fn func(string) string, tests []trimTest) {
 				if err := recover(); err != nil {
 					log.Printf("PANIC: %s(%q), want %q\n%v",
 						name, test.s, test.want, err)
+					fail++
 				}
 			}()
 			actual := fn(test.s)

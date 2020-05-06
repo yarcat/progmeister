@@ -45,6 +45,7 @@ func TestInsertAt(fn func(string, string, int) string) {
 				if err := recover(); err != nil {
 					log.Printf("PANIC: InsertAt(%q, %q, %d), want %q\n%v",
 						test.s, test.subs, test.i, test.want, err)
+					fail++
 				}
 			}()
 			actual := fn(test.s, test.subs, test.i)
@@ -53,7 +54,7 @@ func TestInsertAt(fn func(string, string, int) string) {
 					test.s, test.subs, test.i)
 				pass++
 			} else {
-				log.Printf("PASS: InsertAt(%q, %q, %d) = %q, want %q",
+				log.Printf("FAIL: InsertAt(%q, %q, %d) = %q, want %q",
 					test.s, test.subs, test.i, actual, test.want)
 				fail++
 			}
