@@ -72,6 +72,26 @@ func ExampleTestIndices() {
 	// indices() test results: pass=0, fail=8.
 }
 
+func isNumber(s string) bool {
+	return false
+}
+
+func ExampleTestIsNumber() {
+	strings.TestIsNumber(isNumber)
+	// Output:
+	// isNumber() test results: pass=3, fail=5.
+}
+
+func normalizeNumber(s string) (norm string, num bool) {
+	return "your code goes here", false
+}
+
+func ExampleTestNormalizeNumber() {
+	strings.TestNormalizeNumber(normalizeNumber)
+	// Output:
+	// normalizeNumber() test results: pass=3, fail=3.
+}
+
 func Example() {
 	strings.TestTrimLeftSpace(trimLeftSpace)
 	strings.TestTrimRightSpace(trimRightSpace)
@@ -80,6 +100,8 @@ func Example() {
 	strings.TestIndex(index)
 	strings.TestRightIndex(rightIndex)
 	strings.TestIndices(indices)
+	strings.TestIsNumber(isNumber)
+	strings.TestNormalizeNumber(normalizeNumber)
 	// Output:
 	// trimLeftSpace() test results: pass=0, fail=8.
 	// trimRightSpace() test results: pass=0, fail=8.
@@ -88,4 +110,6 @@ func Example() {
 	// index() test results: pass=0, fail=7.
 	// rightIndex() test results: pass=0, fail=7.
 	// indices() test results: pass=0, fail=8.
+	// isNumber() test results: pass=3, fail=5.
+	// normalizeNumber() test results: pass=3, fail=3.
 }
