@@ -71,6 +71,32 @@ func TestRightIndex(fn func(string, string) int) {
 	}, rightIndexTests)
 }
 
+var indicesTests = []indexTest{
+	{s: "", subs: "", want: nil},
+	{s: "abc", subs: "", want: nil},
+	{s: "abc", subs: "abc", want: []int{0}},
+	{s: "abc", subs: "bc", want: []int{1}},
+	{s: "abcbc", subs: "bc", want: []int{1, 3}},
+	{s: "abc", subs: "cba", want: nil},
+	{s: "", subs: "abc", want: nil},
+	{s: "aaaa", subs: "aa", want: []int{0, 1, 2}},
+}
+
+// TestIndices tests indices function.
+//
+// Problem statement:
+//
+//	Implement a function `func indices(s, subs string) []int` that returns all
+//	indices of subs in s with an overlap (it means that "oo" in "ooo" will be
+//	matched twice - at positions 0 and 1):
+//
+//		rightIndex("fooofooo", "oo") -> [1 2 5 6]
+//		rightIndex("foo", "") -> []
+//		rightIndex("foo", "bar") -> []
+func TestIndices(fn func(string, string) []int) {
+	testIndices("indices", fn, indicesTests)
+}
+
 func testIndices(name string, fn func(string, string) []int, tests []indexTest) {
 	var pass, fail int
 	for _, test := range tests {

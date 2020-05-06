@@ -62,13 +62,24 @@ func ExampleTestRightIndex() {
 	// rightIndex() test results: pass=0, fail=7.
 }
 
+func indices(s, subs string) []int {
+	return []int{65535}
+}
+
+func ExampleTestIndices() {
+	strings.TestIndices(indices)
+	// Output:
+	// indices() test results: pass=0, fail=8.
+}
+
 func Example() {
 	strings.TestTrimLeftSpace(trimLeftSpace)
 	strings.TestTrimRightSpace(trimRightSpace)
 	strings.TestTrimSpace(trimSpace)
 	strings.TestInsertAt(insertAt)
 	strings.TestIndex(index)
-	strings.TestRightIndex(index)
+	strings.TestRightIndex(rightIndex)
+	strings.TestIndices(indices)
 	// Output:
 	// trimLeftSpace() test results: pass=0, fail=8.
 	// trimRightSpace() test results: pass=0, fail=8.
@@ -76,4 +87,5 @@ func Example() {
 	// InsertAt() test results: pass=0, fail=13.
 	// index() test results: pass=0, fail=7.
 	// rightIndex() test results: pass=0, fail=7.
+	// indices() test results: pass=0, fail=8.
 }
