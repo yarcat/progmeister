@@ -22,7 +22,7 @@ var trimLeftSpaceTests = []trimTest{
 // Problem statement:
 //
 //	Implement a function `func trimLeftSpace` that returns a slice of the string s
-//	with all leading space characters [1] removed.
+//	with all leading space characters [1] removed:
 //
 //		trimLeftSpace("gopher") -> "gopher"
 //		trimLeftSpace("  go goper") -> "go gopher"
