@@ -42,14 +42,38 @@ func ExampleTestInsertAt() {
 	// InsertAt() test results: pass=0, fail=13.
 }
 
+func index(s, subs string) int {
+	return 65535
+}
+
+func ExampleTestIndex() {
+	strings.TestIndex(index)
+	// Output:
+	// index() test results: pass=0, fail=7.
+}
+
+func rightIndex(s, subs string) int {
+	return 65535
+}
+
+func ExampleTestRightIndex() {
+	strings.TestRightIndex(index)
+	// Output:
+	// rightIndex() test results: pass=0, fail=7.
+}
+
 func Example() {
 	strings.TestTrimLeftSpace(trimLeftSpace)
 	strings.TestTrimRightSpace(trimRightSpace)
 	strings.TestTrimSpace(trimSpace)
 	strings.TestInsertAt(insertAt)
+	strings.TestIndex(index)
+	strings.TestRightIndex(index)
 	// Output:
 	// trimLeftSpace() test results: pass=0, fail=8.
 	// trimRightSpace() test results: pass=0, fail=8.
 	// trimSpace() test results: pass=0, fail=8.
 	// InsertAt() test results: pass=0, fail=13.
+	// index() test results: pass=0, fail=7.
+	// rightIndex() test results: pass=0, fail=7.
 }
