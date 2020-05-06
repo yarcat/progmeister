@@ -92,6 +92,15 @@ func ExampleTestNormalizeNumber() {
 	// normalizeNumber() test results: pass=3, fail=3.
 }
 
+func itoa(n int) string {
+	return "your code goes here"
+}
+
+func ExampleTestItoa() {
+	strings.TestItoa(itoa)
+	// Output:
+	// itoa() test results: pass=0, fail=4.
+}
 func Example() {
 	strings.TestTrimLeftSpace(trimLeftSpace)
 	strings.TestTrimRightSpace(trimRightSpace)
@@ -102,6 +111,7 @@ func Example() {
 	strings.TestIndices(indices)
 	strings.TestIsNumber(isNumber)
 	strings.TestNormalizeNumber(normalizeNumber)
+	strings.TestItoa(itoa)
 	// Output:
 	// trimLeftSpace() test results: pass=0, fail=8.
 	// trimRightSpace() test results: pass=0, fail=8.
@@ -112,4 +122,5 @@ func Example() {
 	// indices() test results: pass=0, fail=8.
 	// isNumber() test results: pass=3, fail=5.
 	// normalizeNumber() test results: pass=3, fail=3.
+	// itoa() test results: pass=0, fail=4.
 }
