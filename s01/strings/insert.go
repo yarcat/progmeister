@@ -39,6 +39,7 @@ func TestInsertAt(fn func(string, string, int) string) {
 		{s: "", subs: "", want: ""},
 		{s: "", subs: "", i: 5, want: "     "},
 		{s: "", subs: "", i: -5, want: "    "},
+		{s: "яро", subs: "слав", i: 3, want: "ярослав"},
 	} {
 		func() {
 			defer func() {

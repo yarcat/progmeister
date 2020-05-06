@@ -39,7 +39,7 @@ func insertAt(s, subs string, i int) string {
 func ExampleTestInsertAt() {
 	strings.TestInsertAt(insertAt)
 	// Output:
-	// InsertAt() test results: pass=0, fail=12.
+	// InsertAt() test results: pass=0, fail=13.
 }
 
 func Example() {
@@ -51,5 +51,5 @@ func Example() {
 	// trimLeftSpace() test results: pass=0, fail=8.
 	// trimRightSpace() test results: pass=0, fail=8.
 	// trimSpace() test results: pass=0, fail=8.
-	// InsertAt() test results: pass=0, fail=12.
+	// InsertAt() test results: pass=0, fail=13.
 }
