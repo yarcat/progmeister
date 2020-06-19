@@ -1,3 +1,6 @@
+// Program hello demonstrates simple gookit/color usage.
+//
+// More examples at https://medium.com/@inhereat/terminal-color-rendering-tool-library-support-8-16-colors-256-colors-by-golang-a68fb8deee86
 package main
 
 import (
