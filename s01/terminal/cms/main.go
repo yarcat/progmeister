@@ -24,6 +24,11 @@ func main() {
 	itemsTable := tview.NewTable().SetBorders(true)
 	itemsTable.SetBorder(true).SetTitle("Depot Items")
 	itemsTable.SetSelectable(true /* rows */, false /* columns */)
+	itemsTable.SetDoneFunc(func(key tcell.Key) {
+		if key == tcell.KeyEscape {
+			app.Stop()
+		}
+	})
 	itemsTable.SetInputCapture(func(key *tcell.EventKey) *tcell.EventKey {
 		switch key.Rune() {
 		case 'A', 'a':
