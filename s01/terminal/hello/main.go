@@ -21,4 +21,6 @@ func main() {
 		colors[i].Print(string(r))
 	}
 	color.Println()
+
+	color.Println("Hello, <bold>Progmeister</>!")
 }
