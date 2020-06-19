@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
 )
 
@@ -19,8 +20,17 @@ func main() {
 	app := tview.NewApplication()
 
 	depotItems := loadDepotItems()
+
 	itemsTable := tview.NewTable().SetBorders(true)
 	itemsTable.SetBorder(true).SetTitle("Depot Items")
+	itemsTable.SetSelectable(true /* rows */, false /* columns */)
+	itemsTable.SetInputCapture(func(key *tcell.EventKey) *tcell.EventKey {
+		switch key.Rune() {
+		case 'A', 'a':
+			itemsTable.Select(0, 0)
+		}
+		return key
+	})
 	// Header.
 	for col, name := range []string{"ID", "Name", "Quantity"} {
 		itemsTable.SetCellSimple(0 /* row */, col, name)
@@ -31,8 +41,9 @@ func main() {
 		itemsTable.SetCellSimple(row+1, colName, item.name)
 		itemsTable.SetCellSimple(row+1, colQuant, fmt.Sprint(item.quantity))
 	}
-	app.SetRoot(itemsTable, true /* fullscreen */)
+	itemsTable.Select(1, 0)
 
+	app.SetRoot(itemsTable, true /* fullscreen */)
 	if err := app.Run(); err != nil {
 		log.Fatalln("Failed to run the application:", err)
 	}
