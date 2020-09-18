@@ -53,6 +53,18 @@ func main() {
 		row := c.Value()
 		fmt.Println(row.P.FirstName, row.P.LastName, row.C.Name)
 	}
+	fmt.Println()
+	fmt.Println("### SELECT p.FirstName, p.LastName, c.Name")
+	fmt.Println("### FROM people AS p JOIN countries AS c")
+	fmt.Println("### ON (p.CountryID = c.ID)")
+	fmt.Println(`### WHERE p.FirstName LIKE "J%"`)
+	fmt.Println()
+	joined = PersonCountryJoin{P: &people, C: &countries}.On(countryID)
+	personStartsWithJ := func(record PersonCountry) bool { return startsWithJ(record.P) }
+	for c := joined.Select(personStartsWithJ); c.Next(); {
+		row := c.Value()
+		fmt.Println(row.P.FirstName, row.P.LastName, row.C.Name)
+	}
 }
 
 type PersonCountry struct {
@@ -97,22 +109,29 @@ type PersonCountryJoinDB struct {
 	cross func() func() *PersonCountry
 }
 
-func (db *PersonCountryJoinDB) Select(pred PersonCountryPred) *PersonCountryCursor {
-	return &PersonCountryCursor{next: db.cross()}
+func (db *PersonCountryJoinDB) Select(pred PersonCountryPredFunc) *PersonCountryCursor {
+	return &PersonCountryCursor{next: db.cross(), pred: pred}
 }
 
 type PersonCountryCursor struct {
 	next func() *PersonCountry
 	val  *PersonCountry
+	pred PersonCountryPredFunc
 }
 
 func (c *PersonCountryCursor) Next() bool {
-	c.val = c.next()
-	return c.val != nil
+	for {
+		if c.val = c.next(); c.val == nil {
+			return false
+		}
+		if c.pred(*c.val) {
+			return true
+		}
+	}
 }
 
 func (c *PersonCountryCursor) Value() PersonCountry { return *c.val }
 
-type PersonCountryPred func(Person, Country) bool
+type PersonCountryPredFunc func(PersonCountry) bool
 
-func AnyPersonCountry(Person, Country) bool { return true }
+func AnyPersonCountry(PersonCountry) bool { return true }
