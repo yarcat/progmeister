@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 	fmt.Println()
 	fmt.Println(`### SELECT * FROM people WHERE FirstName LIKE "J%"`)
 	fmt.Println()
-	startsWithJ := func(p Person) bool { return p.FirstName[:1] == "J" }
+	startsWithJ := func(p Person) bool { return strings.HasPrefix(p.FirstName, "J") }
 	for c := people.Select(startsWithJ); c.Next(); {
 		fmt.Println(c.Value())
 	}
